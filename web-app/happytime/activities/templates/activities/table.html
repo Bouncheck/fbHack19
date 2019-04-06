@@ -1,0 +1,27 @@
+{% extends "basic_layout.html" %}
+
+{% block content %}
+<table class="table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">00-15</th>
+    <th scope="col">15-30</th>
+    <th scope="col">30-45</th>
+    <th scope="col">45-60</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+    <tr>
+      <th scope="row">{{row.godzina}}</th>
+      {% for col in {{row.cols}} %}
+      <td>col</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    
+
+{% endblock %}
