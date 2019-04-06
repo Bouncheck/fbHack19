@@ -1,4 +1,4 @@
-venv/*
-happytime/.idea
-happytime/db.sqlite*
+web-app/venv/*
+*.idea*
+*db.sqlite*
 *__pycache__*
