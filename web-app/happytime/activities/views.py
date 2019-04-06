@@ -1,15 +1,17 @@
 import json
 import datetime
+import pytz
+
+import dateutil.parser
 
 from django.shortcuts import render
-from django.utils.dateparse import parse_datetime
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from . import models
-from .utils import ActivityTableRow
+from .utils import ActivityTableRow, get_today_midnight
 
 
 @csrf_exempt
@@ -21,7 +23,7 @@ def upload_view(request):
     start_time = data['StartTime']
     data = data['Data']
 
-    start_time = parse_datetime(start_time)
+    start_time = dateutil.parser.parse(start_time)
 
     user = User.objects.filter(username=username)
     if not user:
@@ -48,24 +50,34 @@ class TableView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        today = get_today_midnight()
         activities = models.Activity.objects.\
-            filter(beginning__range=(datetime.datetime.today(). datetime.datetime.today() + datetime.timedelta(days=1))).\
+            filter(beginning__range=(today, today + datetime.timedelta(days=1))).\
             filter(user=self.request.user).select_related('app').order_by('beginning')
 
-        next_hour = datetime.datetime.today()
-        print(next_hour)
+        next_hour = get_today_midnight()
         rows = [ActivityTableRow(next_hour)]
-        next_hour = next_hour.replace(hour=1)
+        next_hour += datetime.timedelta(hours=1)
 
         for activity in activities:
             while next_hour <= activity.beginning:
                 rows.append(ActivityTableRow(next_hour))
                 next_hour = next_hour + datetime.timedelta(hours=1)
 
-            rows[-1].cells.append(
-                (activity.end - activity.beginning, activity.app.name))
+            rows[-1].cells.append(activity)
 
+        print(rows[-1].hour)
 
+        first_hour = get_today_midnight()
+        for row in rows:
+            first_hour = row.hour
+            if row.cells:
+                break
+
+        rows = list(filter(lambda x: x.hour >= first_hour, rows))
+
+        for row in rows:
+            row.group(datetime.timedelta(minutes=15))
 
         context['rows'] = rows
         return context
