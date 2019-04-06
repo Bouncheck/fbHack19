@@ -15,5 +15,7 @@ namespace windows_app
         [DataMember] internal string Time;
 
         [DataMember] internal string Image;
+
+        [DataMember] internal string User;
     }
 }
