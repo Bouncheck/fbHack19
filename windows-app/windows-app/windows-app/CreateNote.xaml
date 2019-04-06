@@ -1,0 +1,23 @@
+﻿<Window x:Class="windows_app.CreateNote"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:windows_app"
+        mc:Ignorable="d"
+        Title="Add note" Height="394" Width="688" ResizeMode="NoResize" MinWidth="602.4" MinHeight="377.2">
+    <Grid Height="349" MinWidth="596" MinHeight="349" Margin="10,8,3.6,7">
+        <Image x:Name="ScreenshotImage" HorizontalAlignment="Left" Height="164" Margin="351,10,0,0" VerticalAlignment="Top" Width="307" RenderTransformOrigin="0.663,1.401"/>
+        <Label Content="Add note" HorizontalAlignment="Left" Margin="12,7,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <TextBox x:Name="NoteTextBox" HorizontalAlignment="Left" Height="224" Margin="20,59,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="299" AcceptsReturn="True" AcceptsTab="True" Padding="10" FontSize="16"/>
+        <Button x:Name="Send" Content="Send" HorizontalAlignment="Left" Margin="523,320,0,0" VerticalAlignment="Top" Width="63" RenderTransformOrigin="0.053,-0.354" FontWeight="Bold" Click="Send_Click"/>
+        <Button x:Name="Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="591,320,0,0" VerticalAlignment="Top" Width="61" Click="Cancel_Click"/>
+
+    </Grid>
+
+    <Window.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+        </Style>
+    </Window.Resources>
+</Window>

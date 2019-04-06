@@ -158,6 +158,9 @@ namespace windows_app
         {
             UIElement senderElement = (UIElement)sender;
             senderElement.Opacity = 0.9;
+
+            CreateNote createNote = new CreateNote();
+            createNote.ShowDialog();
         }
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
