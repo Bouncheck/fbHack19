@@ -11,9 +11,16 @@ namespace windows_app.data_collection
 {
     class CurrentWindowCollector
     {
+        public class TickInfo
+        {
+            public CurrentWindow Window { get; set; }
+
+            public TimeSpan Span { get; set; }
+        }
+
         private const long CollectTickMs = 15;
 
-        private List<CurrentWindow> CurrentTimeSlice;
+        private List<TickInfo> CurrentTimeSlice;
         private DateTime CurrentTimeSliceStart;
         
         private ConcurrentDictionary<string, long> SessionTimeSpent;
@@ -21,6 +28,7 @@ namespace windows_app.data_collection
         private ITimeSliceConsumer Consumer;
 
         private Timer Timer;
+        private DateTime LastTick;
 
         public CurrentWindow CurrentWindow { get; set; }
 
@@ -30,8 +38,10 @@ namespace windows_app.data_collection
         {
             BreakTime = false;
 
-            CurrentTimeSlice = new List<CurrentWindow>();
+            CurrentTimeSlice = new List<TickInfo>();
             CurrentTimeSliceStart = DateTime.Now;
+
+            LastTick = CurrentTimeSliceStart;
 
             CurrentWindow = CurrentWindow.Empty;
             
@@ -60,6 +70,7 @@ namespace windows_app.data_collection
             if (!BreakTime) CollectTick();
 
             Timer.Interval = CollectTickMs;
+            LastTick = DateTime.Now;
         }
 
         private void CollectTick()
@@ -69,10 +80,15 @@ namespace windows_app.data_collection
 
             CurrentWindow = current;
 
-            CurrentTimeSlice.Add(current);
+            TickInfo info = new TickInfo()
+            {
+                Window = CurrentWindow,
+                Span = DateTime.Now.Subtract(LastTick)
+            };
+            CurrentTimeSlice.Add(info);
 
             SessionTimeSpent[current.ProgramName]
-                = GetSessionTimeSpent(current.ProgramName) + CollectTickMs;
+                = GetSessionTimeSpent(current.ProgramName) + info.Span.Milliseconds;
         }
 
         private void StartNewTimeSlice()

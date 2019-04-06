@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="data_collection\CollectionConfiguration.cs" />
     <Compile Include="data_collection\TimeSliceUploader.cs" />
     <Compile Include="util\TimeFormatter.cs" />
     <Page Include="MainWindow.xaml">

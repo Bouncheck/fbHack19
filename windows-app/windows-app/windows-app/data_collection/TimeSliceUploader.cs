@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -33,7 +34,7 @@ namespace windows_app.data_collection
                 timeSliceJson.StartTime =
                     timeSlice.StartTime.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
                 timeSliceJson.TimeLength = timeSlice.LengthInMs;
-                timeSliceJson.Username = "admin"; // TODO - zmienic
+                timeSliceJson.Username = CollectionConfiguration.Default.Username; // TODO - zmienic
                 timeSliceJson.Data = timeSlice.TimeSliceSummary.ToDictionary(p => p.ProgramName, p => p.TimeInMs);
                 return timeSliceJson;
             }
@@ -51,6 +52,11 @@ namespace windows_app.data_collection
             StreamReader reader = new StreamReader(memoryStream);
             string json = reader.ReadToEnd();
             Console.WriteLine(json);
+
+            StringContent httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.PostAsync(CollectionConfiguration.Default.WebService + "/activities/upload", httpContent);
         }
+
+        private static readonly HttpClient client = new HttpClient();
     }
 }
