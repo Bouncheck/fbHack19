@@ -1,4 +1,4 @@
-{% extends "basic_layout.html" %}
+{% extends "base/basic_layout.html" %}
 
 {% block content %}
 <table class="table">
@@ -14,9 +14,9 @@
   <tbody>
     {% for row in rows %}
     <tr>
-      <th scope="row">{{row.godzina}}</th>
-      {% for col in {{row.cols}} %}
-      <td>col</td>
+      <th scope="row">{{row.hour.hour}}:00</th>
+      {% for col in row.cells %}
+      <td>{{ col }}</td>
       {% endfor %}
     </tr>
     {% endfor %}
