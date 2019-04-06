@@ -59,24 +59,47 @@ namespace windows_app
         {
             InitializeComponent();
 
-            currentWindowCollector = new CurrentWindowCollector(null);
+            breakTime = false;
+
+            timeSliceUploader = new TimeSliceUploader();
+            currentWindowCollector = new CurrentWindowCollector(timeSliceUploader);
             CompositionTarget.Rendering += UpdateUI;
         }
 
         private void UpdateUI(object sender, EventArgs e)
         {
-            string programName = currentWindowCollector.CurrentWindow.ProgramName;
+            if (breakTime)
+            {
+                mainLabel.Content = "Break time";
+                secondaryLabel.Content = "Enjoy your break!";
+                return;
+            }
 
+            string programName = currentWindowCollector.CurrentWindow.ProgramName;
             if (string.IsNullOrWhiteSpace(programName)) return;
 
             mainLabel.Content = programName;
-            secondaryLabel.Content = currentWindowCollector.GetSessionTimeSpent(programName);
+            secondaryLabel.Content = TimeFormatter.FormatMillis(currentWindowCollector.GetSessionTimeSpent(programName));
         }
 
-        [DllImport("user32.dll")]
-        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetupBlur();
+            SetupPosition();
+        }
+
+        private void SetupPosition()
+        {
+            double height = ActualHeight, width = ActualWidth;
+
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+
+            Left = screenWidth - width - 7;
+            Top = screenHeight - height - 40 - 7;
+        }
+
+        private void SetupBlur()
         {
             var windowHelper = new WindowInteropHelper(this);
 
@@ -99,6 +122,38 @@ namespace windows_app
             Marshal.FreeHGlobal(accentPtr);
         }
 
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 1.0;
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 0.7;
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 0.9;
+
+            breakTime = !breakTime;
+            currentWindowCollector.BreakTime = breakTime;
+        }
+
+        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 1.0;
+        }
+
         private CurrentWindowCollector currentWindowCollector;
+        private TimeSliceUploader timeSliceUploader;
+        private bool breakTime;
     }
 }

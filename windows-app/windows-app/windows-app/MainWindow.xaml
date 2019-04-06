@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:windows_app"
         mc:Ignorable="d"
-        Title="MainWindow" Height="128.4" Width="280.8" Topmost="True" Background="#02FFFFFF" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded">
-    <Grid Margin="0,0,-0.2,0">
-        <Label x:Name="mainLabel" Content="ZOCHU" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.422,0.359" Height="46" Width="261" Foreground="White" FontSize="22"/>
-        <Label x:Name="secondaryLabel" Content="ZOCHU 2" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="261" Height="31" Foreground="White"/>
+        Title="MainWindow" Height="93.2" Width="280.8" Topmost="True" Background="#02FFFFFF" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded">
+    <Grid Margin="0,0,-0.2,-0.8">
+        <Label x:Name="mainLabel" Content="ZOCHU" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.422,0.359" Height="41" Width="261" Foreground="White" FontSize="18"/>
+        <Label x:Name="secondaryLabel" Content="17 hours and 50 minutes" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Width="139" Height="27" Foreground="White" FontSize="11"/>
+        <Image Source="break.png" Margin="241,48,10,15.6" MouseEnter="Image_MouseEnter" Opacity="0.7" MouseLeave="Image_MouseLeave" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeftButtonUp="Image_MouseLeftButtonUp"/>
     </Grid>
 </Window>
