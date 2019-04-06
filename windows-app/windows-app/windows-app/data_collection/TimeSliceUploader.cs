@@ -30,12 +30,13 @@ namespace windows_app.data_collection
 
             public static TimeSliceJSON FromTimeSliceInfo(TimeSliceInfo timeSlice)
             {
-                TimeSliceJSON timeSliceJson = new TimeSliceJSON();
-                timeSliceJson.StartTime =
-                    timeSlice.StartTime.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture);
-                timeSliceJson.TimeLength = timeSlice.LengthInMs;
-                timeSliceJson.Username = CollectionConfiguration.Default.Username; // TODO - zmienic
-                timeSliceJson.Data = timeSlice.TimeSliceSummary.ToDictionary(p => p.ProgramName, p => p.TimeInMs);
+                TimeSliceJSON timeSliceJson = new TimeSliceJSON
+                {
+                    StartTime = timeSlice.StartTime.ToString("o", CultureInfo.CurrentCulture),
+                    TimeLength = timeSlice.LengthInMs,
+                    Username = CollectionConfiguration.Default.Username,
+                    Data = timeSlice.TimeSliceSummary.ToDictionary(p => p.ProgramName, p => p.TimeInMs)
+                };
                 return timeSliceJson;
             }
         }

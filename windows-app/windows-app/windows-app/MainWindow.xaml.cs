@@ -146,6 +146,20 @@ namespace windows_app
             currentWindowCollector.BreakTime = breakTime;
         }
 
+        private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 0.9;
+
+            System.Diagnostics.Process.Start(CollectionConfiguration.Default.WebService + "/activities/table");
+        }
+
+        private void Image_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        {
+            UIElement senderElement = (UIElement)sender;
+            senderElement.Opacity = 0.9;
+        }
+
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             UIElement senderElement = (UIElement)sender;
