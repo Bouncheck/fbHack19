@@ -16,7 +16,8 @@
     <tr>
       <th scope="row">{{row.hour.hour}}:00</th>
       {% for col in row.cells %}
-      <td><a class="btn btn-primary">{{ col }}</a></td>
+      <!-- substitute col.first and col.second with regards to the future backend changes -->
+      <td colspan="{{ col.first }}"><a class="btn btn-primary btn-block">{{ col.second }}</a></td>
       {% endfor %}
     </tr>
     {% endfor %}
