@@ -7,36 +7,37 @@ namespace windows_app.data_collection
 {
     class CurrentWindow
     {
-        public string WindowTitle { get; set; }
-        public string ProgramName { get; set; }
+        public string WindowTitle { get; private set; }
+        public string ProgramPath { get; private set; }
+        public string ProgramName { get; private set; }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        public static CurrentWindow Empty => new CurrentWindow();
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
-        public string Test()
+        public static CurrentWindow GetActiveWindow()
         {
             try
             {
-                IntPtr handle = GetActiveWindow();
+                IntPtr handle = GetActiveWindowHandle();
 
-                string windowTitle = GetWindowTitle(handle);
-                string programName = GetProgramName(handle);
+                CurrentWindow window = new CurrentWindow();
+                window.WindowTitle = GetWindowTitle(handle);
+                window.ProgramPath = GetProgramPath(handle);
+                window.ProgramName = GetProgramName(window.ProgramPath);
 
-                return programName;
+                return window;
             }
             catch (Exception ex)
             {
-                return "";
+                return CurrentWindow.Empty;
             }
         }
 
-        private static IntPtr GetActiveWindow()
+        public bool IsEmpty()
+        {
+            return string.IsNullOrWhiteSpace(WindowTitle);
+        }
+
+        private static IntPtr GetActiveWindowHandle()
         {
             return GetForegroundWindow();
         }
@@ -47,19 +48,32 @@ namespace windows_app.data_collection
             StringBuilder buffer = new StringBuilder(BUFFER_SIZE);
 
             int readBytes = GetWindowText(handle, buffer, BUFFER_SIZE);
-            return readBytes > 0 ? buffer.ToString() : String.Empty;
+            return readBytes > 0 ? buffer.ToString() : string.Empty;
         }
 
-        private static string GetProgramName(IntPtr handle)
+        private static string GetProgramPath(IntPtr handle)
         {
             GetWindowThreadProcessId(handle, out var processId);
 
-            Process process = Process.GetProcessById((int) processId);
+            Process process = Process.GetProcessById((int)processId);
             string processPath = process.MainModule.FileName;
-            
-            FileVersionInfo info = FileVersionInfo.GetVersionInfo(processPath);
 
+            return processPath;
+        }
+
+        private static string GetProgramName(string programPath)
+        {
+            FileVersionInfo info = FileVersionInfo.GetVersionInfo(programPath);
             return info.ProductName;
         }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
     }
 }
