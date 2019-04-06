@@ -10,7 +10,11 @@ namespace windows_app.data_collection
     {
         public List<CurrentWindow> RecordedWindows { get; set; }
 
-        public int TickInMs { get; set; }
+        public long TickInMs { get; set; }
+
+        public long LengthInMs { get; set; }
+
+        public DateTime StartTime { get; set; }
 
         private List<TimeSliceSummary> timeSliceSummary;
         public List<TimeSliceSummary> TimeSliceSummary
@@ -22,7 +26,8 @@ namespace windows_app.data_collection
                            .Select(g => new TimeSliceSummary()
                            {
                                ProgramName = g.Key,
-                               TimeInMs = g.Count() * TickInMs
+                               TimeInMs = g.Count() * TickInMs,
+                               Window = g.First()
                            }).ToList());
             }
         }

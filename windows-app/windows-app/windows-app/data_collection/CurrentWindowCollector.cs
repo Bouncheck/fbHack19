@@ -11,7 +11,7 @@ namespace windows_app.data_collection
 {
     class CurrentWindowCollector
     {
-        private const int CollectTickMs = 15;
+        private const long CollectTickMs = 15;
 
         private List<CurrentWindow> CurrentTimeSlice;
         private DateTime CurrentTimeSliceStart;
@@ -24,8 +24,12 @@ namespace windows_app.data_collection
 
         public CurrentWindow CurrentWindow { get; set; }
 
+        public bool BreakTime { get; set; }
+
         public CurrentWindowCollector(ITimeSliceConsumer consumer)
         {
+            BreakTime = false;
+
             CurrentTimeSlice = new List<CurrentWindow>();
             CurrentTimeSliceStart = DateTime.Now;
 
@@ -38,6 +42,7 @@ namespace windows_app.data_collection
             Timer = new Timer();
             Timer.Elapsed += DoCollect;
             Timer.Interval = CollectTickMs;
+            Timer.AutoReset = false;
 
             Timer.Start();
         }
@@ -52,13 +57,15 @@ namespace windows_app.data_collection
         {
             if (ShouldEndTimeSlice()) StartNewTimeSlice();
 
-            CollectTick();
+            if (!BreakTime) CollectTick();
+
+            Timer.Interval = CollectTickMs;
         }
 
         private void CollectTick()
         {
             CurrentWindow current = CurrentWindow.GetActiveWindow();
-            if (current.IsEmpty()) return;
+            if (current.ShouldDiscard()) return;
 
             CurrentWindow = current;
 
@@ -70,15 +77,17 @@ namespace windows_app.data_collection
 
         private void StartNewTimeSlice()
         {
-            CurrentTimeSliceStart = DateTime.Now;
-
             TimeSliceInfo timeSliceInfo = new TimeSliceInfo
             {
                 RecordedWindows = CurrentTimeSlice,
-                TickInMs = CollectTickMs
+                TickInMs = CollectTickMs,
+                StartTime = CurrentTimeSliceStart,
+                LengthInMs = 60 * 1000
             };
 
             Consumer?.Consume(timeSliceInfo);
+
+            CurrentTimeSliceStart = DateTime.Now;
             CurrentTimeSlice.Clear();
         }
 
