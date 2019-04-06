@@ -4,6 +4,9 @@ import pytz
 from django.utils import timezone
 
 
+EMPTY_APP_NAME = "None"
+
+
 class ActivityTableRow:
     def __init__(self, hour):
         self.hour = hour
@@ -13,21 +16,21 @@ class ActivityTableRow:
         next = self.hour + delta
         cells = []
         maxi = datetime.timedelta()
-        name = ''
+        name = EMPTY_APP_NAME
 
         for cell in self.cells:
             while next <= cell.beginning:
                 cells.append(name)
                 next += delta
                 maxi = datetime.timedelta()
-                name = ''
+                name = EMPTY_APP_NAME
 
             if maxi < cell.end - cell.beginning:
                 maxi = cell.end - cell.beginning
                 name = cell.app.name
 
         cells.append(name)
-        name = ''
+        name = EMPTY_APP_NAME
         next += delta
 
         while next <= self.hour + datetime.timedelta(hours=1):
