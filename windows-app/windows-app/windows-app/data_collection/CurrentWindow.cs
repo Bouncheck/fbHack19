@@ -37,6 +37,17 @@ namespace windows_app.data_collection
             return string.IsNullOrWhiteSpace(WindowTitle);
         }
 
+        public bool ShouldDiscard()
+        {
+            if (IsEmpty()) return true;
+
+            if (ProgramName.Contains("Microsoft® Windows® Operating System")) return true;
+            if (ProgramPath.ToLower().Trim().EndsWith("explorer.exe")) return true;
+            if (ProgramPath.ToLower().Trim().EndsWith("windows-app.exe")) return true;
+
+            return false;
+        }
+
         private static IntPtr GetActiveWindowHandle()
         {
             return GetForegroundWindow();
