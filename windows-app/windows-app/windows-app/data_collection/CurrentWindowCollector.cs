@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace windows_app.data_collection
         private List<CurrentWindow> CurrentTimeSlice;
         private DateTime CurrentTimeSliceStart;
 
+        private ConcurrentDictionary<string, long> SessionTimeSpent;
+
         private ITimeSliceConsumer Consumer;
 
         private Timer Timer;
@@ -24,6 +27,8 @@ namespace windows_app.data_collection
             CurrentTimeSlice = new List<CurrentWindow>();
             CurrentTimeSliceStart = DateTime.Now;
 
+            SessionTimeSpent = new ConcurrentDictionary<string, long>();
+
             Consumer = consumer;
 
             Timer = new Timer();
@@ -31,6 +36,12 @@ namespace windows_app.data_collection
             Timer.Interval = CollectTickMs;
 
             Timer.Start();
+        }
+
+        public long GetSessionTimeSpent(string programName)
+        {
+            return SessionTimeSpent.ContainsKey(programName)
+                ? SessionTimeSpent[programName] : 0;
         }
 
         private void DoCollect(object sender, ElapsedEventArgs e)
@@ -46,6 +57,9 @@ namespace windows_app.data_collection
             if (current.IsEmpty()) return;
 
             CurrentTimeSlice.Add(current);
+
+            SessionTimeSpent[current.ProgramName]
+                = GetSessionTimeSpent(current.ProgramName) + CollectTickMs;
         }
 
         private void StartNewTimeSlice()
@@ -58,7 +72,7 @@ namespace windows_app.data_collection
                 TickInMs = CollectTickMs
             };
 
-            Consumer.Consume(timeSliceInfo);
+            Consumer?.Consume(timeSliceInfo);
             CurrentTimeSlice.Clear();
         }
 

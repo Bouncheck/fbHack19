@@ -22,11 +22,10 @@ namespace windows_app
         public MainWindow()
         {
             InitializeComponent();
-
-            SummarizedConsumer summ = new SummarizedConsumer();
-            cwc = new CurrentWindowCollector(summ);
+            
+            currentWindowCollector = new CurrentWindowCollector(null);
         }
 
-        private CurrentWindowCollector cwc;
+        private CurrentWindowCollector currentWindowCollector;
     }
 }

@@ -86,8 +86,8 @@
     <Compile Include="data_collection\CurrentWindow.cs" />
     <Compile Include="data_collection\CurrentWindowCollector.cs" />
     <Compile Include="data_collection\ITimeSliceConsumer.cs" />
-    <Compile Include="data_collection\SummarizedConsumer.cs" />
     <Compile Include="data_collection\TimeSliceInfo.cs" />
+    <Compile Include="data_collection\TimeSliceSummary.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

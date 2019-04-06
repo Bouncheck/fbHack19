@@ -8,12 +8,6 @@ namespace windows_app.data_collection
 {
     class SummarizedConsumer : ITimeSliceConsumer
     {
-        private class Summary
-        {
-            public string ProgramName { get; set; }
-            public int TimeInMs { get; set; }
-        }
-
         public void Consume(TimeSliceInfo timeSlice)
         {
             List<Summary> summarized = timeSlice.RecordedWindows.GroupBy(q => q.ProgramName)
