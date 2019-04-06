@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:windows_app"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Topmost="True" Background="#02FFFFFF" AllowsTransparency="True" WindowStyle="None">
-    <Grid>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="301,177,0,0" VerticalAlignment="Top"/>
+        Title="MainWindow" Height="128.4" Width="280.8" Topmost="True" Background="#02FFFFFF" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded">
+    <Grid Margin="0,0,-0.2,0">
+        <Label x:Name="mainLabel" Content="ZOCHU" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.422,0.359" Height="46" Width="261" Foreground="White" FontSize="22"/>
+        <Label x:Name="secondaryLabel" Content="ZOCHU 2" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="261" Height="31" Foreground="White"/>
     </Grid>
 </Window>
