@@ -1,0 +1,19 @@
+{% extends "base/basic_layout.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div>
+    <form method="POST">
+        <h2 class="text-center">Sign in</h2>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div>
+            <button class="btn btn-success" type="submit">Sign in</button>
+        </div>
+    </form>
+    <small>
+        Need an account? No problem. Just <a href="{% url 'register' %}">sign up</a>!
+    </small>
+</div>
+
+{% endblock %}
