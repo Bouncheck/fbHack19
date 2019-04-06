@@ -1,6 +1,5 @@
 import json
 import datetime
-import pytz
 
 import dateutil.parser
 
@@ -65,8 +64,6 @@ class TableView(TemplateView):
                 next_hour = next_hour + datetime.timedelta(hours=1)
 
             rows[-1].cells.append(activity)
-
-        print(rows[-1].hour)
 
         first_hour = get_today_midnight()
         for row in rows:

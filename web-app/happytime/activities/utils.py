@@ -42,5 +42,5 @@ class ActivityTableRow:
 
 
 def get_today_midnight():
-    midnight = timezone.now()
+    midnight = timezone.localtime()
     return midnight.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=pytz.timezone('Etc/GMT-2'))

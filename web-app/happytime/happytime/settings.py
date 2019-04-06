@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'activities.apps.ActivitiesConfig',
     'base.apps.BaseConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'notes.apps.NotesConfig'
 ]
 
 MIDDLEWARE = [
@@ -123,5 +124,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# Login urls
+
 LOGIN_URL = 'login'
+
 LOGIN_REDIRECT_URL = 'base:home'
+
+
+# Crispy Forms
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
