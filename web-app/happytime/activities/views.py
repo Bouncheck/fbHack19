@@ -34,5 +34,15 @@ def upload_view(request):
     return None
 
 
+from .models import Activity
+
 def table_view(request):
+    activities = Activity.objects.all()
+    #
+    # tablica 24(godziny) x 4 (przedzialy 15 minutowe)
+    # w komorce (x,y) znajduje sie najczesciej uzywana aplikacja
+    # w przedziale czasowym [x:y, x:(y+15)]. tab 0-indeksowana
+    
+    # Template dostaje tablice, numer wiersza (godzina) od ktorego zaczac,
+    # numer wiersza po ktorym skonczyc
     return None
