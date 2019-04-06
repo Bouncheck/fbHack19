@@ -37,7 +37,8 @@ class ActivityTableRow:
             cells.append(name)
             next += delta
 
-        self.cells = cells
+        cells = list(map(lambda x: (x, cells.count(x)), cells))
+        self.cells = sorted(set(cells), key=lambda x: cells.index(x))
 
 
 def get_today_midnight():
