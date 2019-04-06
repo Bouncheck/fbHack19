@@ -57,7 +57,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,12 +78,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateNote.xaml.cs">
+      <DependentUpon>CreateNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="data_collection\CollectionConfiguration.cs" />
     <Compile Include="data_collection\TimeSliceUploader.cs" />
+    <Compile Include="NoteJSON.cs" />
     <Compile Include="SubmitEmoji.xaml.cs">
       <DependentUpon>SubmitEmoji.xaml</DependentUpon>
     </Compile>
     <Compile Include="util\TimeFormatter.cs" />
+    <Page Include="CreateNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
