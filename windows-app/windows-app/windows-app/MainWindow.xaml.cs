@@ -23,17 +23,10 @@ namespace windows_app
         {
             InitializeComponent();
 
-            Timer = new DispatcherTimer();
-            Timer.Tick += TimeTick;
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            Timer.Start();
+            SummarizedConsumer summ = new SummarizedConsumer();
+            cwc = new CurrentWindowCollector(summ);
         }
 
-        private void TimeTick(object sender, EventArgs e)
-        {
-            this.label.Content = new CurrentWindow().Test();
-        }
-
-        private DispatcherTimer Timer { get; set; }
+        private CurrentWindowCollector cwc;
     }
 }
