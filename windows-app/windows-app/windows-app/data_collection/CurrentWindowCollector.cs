@@ -15,18 +15,22 @@ namespace windows_app.data_collection
 
         private List<CurrentWindow> CurrentTimeSlice;
         private DateTime CurrentTimeSliceStart;
-
+        
         private ConcurrentDictionary<string, long> SessionTimeSpent;
 
         private ITimeSliceConsumer Consumer;
 
         private Timer Timer;
 
+        public CurrentWindow CurrentWindow { get; set; }
+
         public CurrentWindowCollector(ITimeSliceConsumer consumer)
         {
             CurrentTimeSlice = new List<CurrentWindow>();
             CurrentTimeSliceStart = DateTime.Now;
 
+            CurrentWindow = CurrentWindow.Empty;
+            
             SessionTimeSpent = new ConcurrentDictionary<string, long>();
 
             Consumer = consumer;
@@ -55,6 +59,8 @@ namespace windows_app.data_collection
         {
             CurrentWindow current = CurrentWindow.GetActiveWindow();
             if (current.IsEmpty()) return;
+
+            CurrentWindow = current;
 
             CurrentTimeSlice.Add(current);
 
