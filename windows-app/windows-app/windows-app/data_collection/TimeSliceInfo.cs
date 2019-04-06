@@ -11,5 +11,20 @@ namespace windows_app.data_collection
         public List<CurrentWindow> RecordedWindows { get; set; }
 
         public int TickInMs { get; set; }
+
+        private List<TimeSliceSummary> timeSliceSummary;
+        public List<TimeSliceSummary> TimeSliceSummary
+        {
+            get
+            {
+                return timeSliceSummary ?? (timeSliceSummary =
+                       RecordedWindows.GroupBy(q => q.ProgramName)
+                           .Select(g => new TimeSliceSummary()
+                           {
+                               ProgramName = g.Key,
+                               TimeInMs = g.Count() * TickInMs
+                           }).ToList());
+            }
+        }
     }
 }
