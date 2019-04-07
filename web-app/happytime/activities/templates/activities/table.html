@@ -1,6 +1,6 @@
 {% extends "base/basic_layout.html" %}
-
 {% block content %}
+<div class="row">
 <table class="table">
   <thead class="thead-dark">
   <tr>
@@ -16,13 +16,18 @@
     <tr>
       <th scope="row">{{row.hour.hour}}:00</th>
       {% for col in row.cells %}
-      <!-- substitute col.first and col.second with regards to the future backend changes -->
-      <td colspan="{{ col.0 }}"><a class="btn btn-primary btn-block">{{ col.1 }}</a></td>
+      <td colspan="{{ col.1 }}"><a class="btn act-btn btn-warning btn-block">{{ col.0 }}</a></td>
       {% endfor %}
     </tr>
     {% endfor %}
   </tbody>
 </table>
-    
+</div>
+{% for snapshot in snapshots %}
+<div class="row">
+  <div class="col-lg-8"><img src="{{snapshot.image}}" class="img-fluid" alt="Responsive img"></div>
+  <div class="col-lg-4 text-center">{{snapshost.description}}</div>
+</div>
+{% endfor %}
 
 {% endblock %}

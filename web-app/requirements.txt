@@ -1,4 +1,5 @@
 #cat requirements.txt
-django>=2.2
-django-crispy-forms>=1.7
+django>=2.2<2.3
+django-crispy-forms>=1.7<1.8
 python-dateutil
+pillow>=6.0.0<7.0.0
