@@ -112,5 +112,4 @@ class TableView(FormView):
             snapshots.append(note)
 
         context['snapshots'] = snapshots
-        context['title'] = 'HappyTime'
         return context
