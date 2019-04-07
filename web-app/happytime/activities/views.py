@@ -1,15 +1,17 @@
 import json
 import datetime
+import pytz
 
 import dateutil.parser
 
-from django.shortcuts import render
+from django.shortcuts import redirect, reverse
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.views.generic import FormView
 
 from . import models
+from . import forms
 from notes.models import Note
 from .utils import ActivityTableRow, get_today_midnight
 
@@ -44,18 +46,26 @@ def upload_view(request):
     return HttpResponse()
 
 
-class TableView(TemplateView):
+class TableView(FormView):
     template_name = 'activities/table.html'
+    form_class = forms.DatePickerForm
+
+    def form_valid(self, form):
+        return redirect(reverse('activities:activities_table_view') + form.data['date'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         today = get_today_midnight()
+        if 'day' in self.kwargs:
+            today = dateutil.parser.parse(self.kwargs['day'])
+            today = today.replace(tzinfo=pytz.timezone('Etc/GMT-2'))
+
         activities = models.Activity.objects.\
             filter(beginning__range=(today, today + datetime.timedelta(days=1))).\
             filter(user=self.request.user).select_related('app').order_by('beginning')
 
-        next_hour = get_today_midnight()
+        next_hour = today
         rows = [ActivityTableRow(next_hour)]
         next_hour += datetime.timedelta(hours=1)
 
@@ -66,7 +76,7 @@ class TableView(TemplateView):
 
             rows[-1].cells.append(activity)
 
-        first_hour = get_today_midnight()
+        first_hour = today
         for row in rows:
             first_hour = row.hour
             if row.cells:
@@ -79,7 +89,6 @@ class TableView(TemplateView):
 
         context['rows'] = rows
 
-        today = get_today_midnight()
         notes = Note.objects.filter(timestamp__range=(today, today + datetime.timedelta(days=1))).\
             filter(user=self.request.user)
 

@@ -1,18 +1,16 @@
 {% extends "base/basic_layout.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <div>
     <form method="POST">
-        <h2 class="text-center"></h2>
+        <h2 class="text-center">Pick a date:</h2>
         {% csrf_token %}
         {{ form|crispy }}
         <div>
-            <button class="btn btn-success" type="submit">Sign in</button>
+            <button class="btn btn-primary" type="submit">Change date</button>
         </div>
     </form>
-    <small>
-        Need an account? No problem. Just <a href="{% url 'register' %}">sign up</a>!
-    </small>
 </div>
 
 <div class="row">
