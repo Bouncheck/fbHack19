@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from users.views import RegisterView
-
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
@@ -28,4 +29,4 @@ urlpatterns = [
     path('activities/', include('activities.urls')),
     path('', include('base.urls')),
     path('notes/',  include('notes.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
