@@ -42,8 +42,8 @@
 {% for snapshot in snapshots %}
 <div class="row border border-3 with-margin-bot pt-2">
   <div class="col-lg-6">
-    <a href="#" class="pop">
-      <img src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img">
+    <a href="#" id="pop">
+      <img id="imageresource" src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img">
     </a>
   </div>
   <div class="col-lg-6 ">
@@ -56,18 +56,28 @@
   </div>
 </div>
 
+{% endfor %}
+
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">              
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+      </div>
       <div class="modal-body">
-      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <img src="" class="imagepreview" style="width: 100%;" >
+        <img src="" id="imagepreview" style="width: 400px; height: 264px;" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-{% endfor %}
+
 <br>
 <br>
+
+
 
 {% endblock %}
