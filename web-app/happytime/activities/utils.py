@@ -3,6 +3,8 @@ import pytz
 
 from django.utils import timezone
 
+from notes.models import Note
+
 
 EMPTY_APP_NAME = "None"
 COLORS = ["#16a085", "#27ae60", "#2980b9", "#8e44ad", "#f39c12", "#e67e22", "#e74c3c"]
@@ -22,13 +24,19 @@ class ActivityTableRow:
         self.hour = hour
         self.cells = []
 
-    def group(self, delta):
+    def group(self, delta, user):
         next = self.hour + delta
         cells = []
         maxi = datetime.timedelta()
         name = EMPTY_APP_NAME
 
+        notes = Note.objects.filter(timestamp__range=(self.hour, self.hour + datetime.timedelta(hours=1))).\
+            filter(user=user)
+
         for cell in self.cells:
+            if any(cell.beginning <= note.timestamp and note.timestamp <= cell.end for note in notes):
+                cell.app.name += '😊'
+
             while next <= cell.beginning:
                 cells.append(name)
                 next += delta

@@ -96,7 +96,7 @@ class TableView(FormView):
         rows = list(filter(lambda x: x.hour >= first_hour, rows))
 
         for row in rows:
-            row.group(datetime.timedelta(minutes=15))
+            row.group(datetime.timedelta(minutes=15), self.request.user)
 
         context['rows'] = rows
 
