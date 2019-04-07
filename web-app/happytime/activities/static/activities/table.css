@@ -49,3 +49,12 @@ button {
 label {
     display: inline;
 }
+
+.btn {
+    -webkit-transition: 0.1s ease-in-out;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    -webkit-transform: scale(1.03, 1.03);
+}
