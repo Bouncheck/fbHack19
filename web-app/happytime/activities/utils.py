@@ -58,7 +58,7 @@ class ActivityTableRow:
         previous = self.hour
         for id, cell in enumerate(self.cells):
             if any(previous <= note.timestamp and note.timestamp <= previous + delta * cell[1] for note in notes):
-                self.cells[id] = (cell[0] + '😊', cell[1], cell[2])
+                self.cells[id] = (cell[0] + ' 😊', cell[1], cell[2])
 
             previous += delta * cell[1]
 
