@@ -1,7 +1,17 @@
 {% extends "base/basic_layout.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
+
+<div class="text-center mb-3">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary" type="submit">Change date</button>
+    </form>
+</div>
+
 <div class="row">
-<table class="table">
+<table class="table with-margin-bot">
   <thead class="thead-dark">
   <tr>
     <th scope="col">#</th>
@@ -16,18 +26,33 @@
     <tr>
       <th scope="row">{{row.hour.hour}}:00</th>
       {% for col in row.cells %}
-      <td colspan="{{ col.1 }}"><a class="btn act-btn btn-warning btn-block">{{ col.0 }}</a></td>
+      <td colspan="{{ col.1 }}"><a class="btn act-btn btn-block" style="color: white; background-color: {{col.2}}">{{ col.0 }}</a></td>
       {% endfor %}
     </tr>
     {% endfor %}
   </tbody>
 </table>
 </div>
-{% for snapshot in snapshots %}
 <div class="row">
-  <div class="col-lg-8"><img src="{{snapshot.image}}" class="img-fluid" alt="Responsive img"></div>
-  <div class="col-lg-4 text-center">{{snapshost.description}}</div>
+<div class="col-lg-12"><a class="btn btn-block">&nbsp;</a></div>
+</div>
+
+<h2 class="text-center mt-2 mb-4">🎉Your happy moments!🎉</h2>
+
+{% for snapshot in snapshots %}
+<div class="row border border-3 with-margin-bot pt-2">
+  <div class="col-lg-6"><img src="{{ snapshot.image.url }}" class="img-fluid mb-2" alt="Responsive img"></div>
+  <div class="col-lg-6 ">
+    <div class="row with-margin-bot align-top">
+      <div class="col text-right">🕒 {{ snapshot.timestamp }}</div>
+    </div>
+    <div class="row with-margin-bot" style="height: 100%; margin-top: -5%">
+      <div class="col text-center my-auto" style="font-size: 18pt">{{ snapshot.note }}</div>
+    </div>
+  </div>
 </div>
 {% endfor %}
+<br>
+<br>
 
 {% endblock %}

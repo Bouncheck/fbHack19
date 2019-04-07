@@ -6,6 +6,55 @@ table {
 }
 
 .act-btn {
-  height: 80px;
+  height: 65px;
 }
 
+.border-3 {
+  border-width:3px !important;
+}
+
+.with-margin-bot {
+  margin-bottom: 4px;
+}
+
+form {
+  display: inline;
+}
+
+input {
+  display: inline;
+}
+
+.dateinput {
+    display: inline;
+    width: 30%;
+}
+
+#div_id_date {
+  display: inline;
+}
+
+.requiredField {
+  display: None;
+}
+
+#div_id_date div {
+  display: inline;
+}
+
+button {
+    display: inline;
+}
+
+label {
+    display: inline;
+}
+
+.btn {
+    -webkit-transition: 0.1s ease-in-out;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    -webkit-transform: scale(1.03, 1.03);
+}
