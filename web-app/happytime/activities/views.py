@@ -50,16 +50,27 @@ class TableView(FormView):
     template_name = 'activities/table.html'
     form_class = forms.DatePickerForm
 
-    def form_valid(self, form):
-        return redirect(reverse('activities:activities_table_view') + form.data['date'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
+    def _get_today(self):
         today = get_today_midnight()
         if 'day' in self.kwargs:
             today = dateutil.parser.parse(self.kwargs['day'])
             today = today.replace(tzinfo=pytz.timezone('Etc/GMT-2'))
+
+        return today
+
+    def form_valid(self, form):
+        return redirect(reverse('activities:activities_table_view') + form.data['date'])
+
+    def get_initial(self):
+        form = dict()
+        form['date'] = self._get_today()
+
+        return form
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        today = self._get_today()
 
         activities = models.Activity.objects.\
             filter(beginning__range=(today, today + datetime.timedelta(days=1))).\
