@@ -1,7 +1,7 @@
 {% extends "base/basic_layout.html" %}
 {% block content %}
 <div class="row">
-<table class="table">
+<table class="table with-margin-bot">
   <thead class="thead-dark">
   <tr>
     <th scope="col">#</th>
@@ -24,7 +24,7 @@
 </table>
 </div>
 {% for snapshot in snapshots %}
-<div class="row border border-3">
+<div class="row border border-3 with-margin-bot">
   <div class="col-lg-6"><img src="{{snapshot.image}}" class="img-fluid" alt="Responsive img"></div>
   <div class="col-lg-6 text-center my-auto">{{snapshost.description}}</div>
 </div>
