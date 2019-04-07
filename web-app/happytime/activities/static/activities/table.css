@@ -16,3 +16,36 @@ table {
 .with-margin-bot {
   margin-bottom: 4px;
 }
+
+form {
+  display: inline;
+}
+
+input {
+  display: inline;
+}
+
+.dateinput {
+    display: inline;
+    width: 30%;
+}
+
+#div_id_date {
+  display: inline;
+}
+
+.requiredField {
+  display: None;
+}
+
+#div_id_date div {
+  display: inline;
+}
+
+button {
+    display: inline;
+}
+
+label {
+    display: inline;
+}

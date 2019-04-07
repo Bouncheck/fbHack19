@@ -6,9 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- moj smieciowy css -->
-    <link rel="stylesheet" type="text/css" href="{% static "activities/table.css" %}" />
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -17,11 +14,13 @@
   <body>
 
    <div class="container">
-       <img class="mt-4 mb-5 col-5" src="{% static "base/logo.png" %}"/>
+       <img class="mt-4 mb-4 col-5" src="{% static "base/logo.png" %}"/>
 
         {% block content %}
         {% endblock %}
     </div>
+
+   <link rel="stylesheet" type="text/css" href="{% static "activities/table.css" %}" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
