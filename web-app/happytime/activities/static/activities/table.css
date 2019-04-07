@@ -9,3 +9,6 @@ table {
   height: 80px;
 }
 
+.border-3 {
+  border-width:3px !important;
+}
