@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from django.views.generic import TemplateView
 
 from . import models
+from notes.models import Note
 from .utils import ActivityTableRow, get_today_midnight
 
 
@@ -77,4 +78,14 @@ class TableView(TemplateView):
             row.group(datetime.timedelta(minutes=15))
 
         context['rows'] = rows
+
+        today = get_today_midnight()
+        notes = Note.objects.filter(timestamp__range=(today, today + datetime.timedelta(days=1))).\
+            filter(user=self.request.user)
+
+        snapshots = []
+        for note in notes:
+            snapshots.append(note)
+
+        context['snapshots'] = snapshots
         return context
