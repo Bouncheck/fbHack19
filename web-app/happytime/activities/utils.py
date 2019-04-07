@@ -34,9 +34,6 @@ class ActivityTableRow:
             filter(user=user)
 
         for cell in self.cells:
-            if any(cell.beginning <= note.timestamp and note.timestamp <= cell.end for note in notes):
-                cell.app.name += '😊'
-
             while next <= cell.beginning:
                 cells.append(name)
                 next += delta
@@ -57,6 +54,13 @@ class ActivityTableRow:
 
         cells = list(map(lambda x: (x, cells.count(x), name_to_color(x)), cells))
         self.cells = sorted(set(cells), key=lambda x: cells.index(x))
+
+        previous = self.hour
+        for id, cell in enumerate(self.cells):
+            if any(previous <= note.timestamp and note.timestamp <= previous + delta * cell[1] for note in notes):
+                self.cells[id] = (cell[0] + '😊', cell[1], cell[2])
+
+            previous += delta * cell[1]
 
 
 def get_today_midnight():
