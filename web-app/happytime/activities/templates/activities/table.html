@@ -37,9 +37,16 @@
 <div class="col-lg-12"><a class="btn btn-block">&nbsp;</a></div>
 </div>
 {% for snapshot in snapshots %}
-<div class="row border border-3 with-margin-bot">
+<div class="row border border-3 with-margin-bot pt-2">
   <div class="col-lg-6"><img src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img"></div>
-  <div class="col-lg-6 text-center my-auto">{{ snapshot.note }}</div>
+  <div class="col-lg-6 text-center my-auto">
+    <div class="row with-margin-bot">
+      <div class="col-lg-6 text-right">{{ snapshot.timestamp }}</div>
+    </div>
+    <div class="row with-margin-bot">
+      <div class="col-lg-6 text-center">{{ snapshot.note }}</div>
+    </div>
+  </div>
 </div>
 {% endfor %}
 
