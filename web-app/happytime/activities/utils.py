@@ -6,9 +6,13 @@ from django.utils import timezone
 
 EMPTY_APP_NAME = "None"
 COLORS = ["#16a085", "#27ae60", "#2980b9", "#8e44ad", "#f39c12", "#e67e22", "#e74c3c"]
+EMPTY_COLOR = '#ffffff'
 
 
 def name_to_color(name):
+    if EMPTY_APP_NAME == name:
+        return EMPTY_COLOR
+
     h = hash(name)
     return COLORS[h % len(COLORS)]
 

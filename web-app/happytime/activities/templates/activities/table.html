@@ -2,14 +2,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div>
+<div class="col-3 mb-3">
     <form method="POST">
-        <h2 class="text-center">Pick a date:</h2>
         {% csrf_token %}
         {{ form|crispy }}
-        <div>
-            <button class="btn btn-primary" type="submit">Change date</button>
-        </div>
+        <button class="btn btn-primary" type="submit">Change date</button>
     </form>
 </div>
 
@@ -41,8 +38,8 @@
 </div>
 {% for snapshot in snapshots %}
 <div class="row border border-3 with-margin-bot">
-  <div class="col-lg-6"><img src="{{snapshot.image}}" class="img-fluid" alt="Responsive img"></div>
-  <div class="col-lg-6 text-center my-auto">{{snapshost.description}}</div>
+  <div class="col-lg-6"><img src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img"></div>
+  <div class="col-lg-6 text-center my-auto">{{ snapshot.note }}</div>
 </div>
 {% endfor %}
 
