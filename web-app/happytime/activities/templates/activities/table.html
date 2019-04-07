@@ -41,13 +41,28 @@
 
 {% for snapshot in snapshots %}
 <div class="row border border-3 with-margin-bot pt-2">
-  <div class="col-lg-6"><img src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img"></div>
+  <div class="col-lg-6">
+    <a href="#" class="pop">
+      <img src="{{ snapshot.image.url }}" class="img-fluid" alt="Responsive img">
+    </a>
+  </div>
   <div class="col-lg-6 ">
     <div class="row with-margin-bot align-top">
       <div class="col text-right">🕒 {{ snapshot.timestamp }}</div>
     </div>
     <div class="row with-margin-bot" style="height: 100%; margin-top: -5%">
       <div class="col text-center my-auto">{{ snapshot.note }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">              
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <img src="" class="imagepreview" style="width: 100%;" >
+      </div>
     </div>
   </div>
 </div>
