@@ -15,7 +15,7 @@
     <tr>
       <th scope="row">{{row.hour.hour}}:00</th>
       {% for col in row.cells %}
-      <td colspan="{{ col.1 }}"><a class="btn btn-warning btn-block">{{ col.0 }}</a></td>
+      <td colspan="{{ col.1 }}"><a class="btn act-btn text-center btn-warning btn-block">{{ col.0 }}</a></td>
       {% endfor %}
     </tr>
     {% endfor %}
