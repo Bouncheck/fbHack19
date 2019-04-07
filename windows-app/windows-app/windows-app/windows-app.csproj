@@ -152,5 +152,8 @@
   <ItemGroup>
     <Resource Include="comment.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\app.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
