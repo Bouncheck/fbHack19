@@ -15,6 +15,8 @@ from . import forms
 from notes.models import Note
 from .utils import ActivityTableRow, get_today_midnight
 
+from dateutil.tz import tzlocal
+
 
 @csrf_exempt
 def upload_view(request):
@@ -105,7 +107,10 @@ class TableView(FormView):
 
         snapshots = []
         for note in notes:
+            note.timestamp = pytz.utc.localize(note.timestamp.replace(tzinfo=None), is_dst=None).astimezone(tzlocal())
+            note.timestamp = note.timestamp.strftime("%H:%M")
             snapshots.append(note)
 
         context['snapshots'] = snapshots
+        context['title'] = 'HappyTime'
         return context
