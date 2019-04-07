@@ -80,6 +80,9 @@ namespace windows_app
 
             mainLabel.Content = programName;
             secondaryLabel.Content = TimeFormatter.FormatMillis(currentWindowCollector.GetSessionTimeSpent(programName));
+
+            if (programName.Equals("Break time"))
+                secondaryLabel.Content = "Enjoy your break!";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -22,7 +22,7 @@ namespace windows_app.data_collection
 
         private List<TickInfo> CurrentTimeSlice;
         private DateTime CurrentTimeSliceStart;
-        
+
         private ConcurrentDictionary<string, long> SessionTimeSpent;
 
         private ITimeSliceConsumer Consumer;
@@ -44,7 +44,7 @@ namespace windows_app.data_collection
             LastTick = CurrentTimeSliceStart;
 
             CurrentWindow = CurrentWindow.Empty;
-            
+
             SessionTimeSpent = new ConcurrentDictionary<string, long>();
 
             Consumer = consumer;
@@ -67,7 +67,7 @@ namespace windows_app.data_collection
         {
             if (ShouldEndTimeSlice()) StartNewTimeSlice();
 
-            if (!BreakTime) CollectTick();
+            CollectTick();
 
             Timer.Interval = CollectTickMs;
             LastTick = DateTime.Now;
@@ -75,14 +75,22 @@ namespace windows_app.data_collection
 
         private void CollectTick()
         {
-            CurrentWindow current = CurrentWindow.GetActiveWindow();
-            if (current.ShouldDiscard()) return;
+            CurrentWindow current;
+            if (!BreakTime)
+            {
+                current = CurrentWindow.GetActiveWindow();
+                if (current.ShouldDiscard()) return;
 
-            CurrentWindow = current;
+                CurrentWindow = current;
+            }
+            else
+            {
+                current = CurrentWindow.FromString("Break time");
+            }
 
             TickInfo info = new TickInfo()
             {
-                Window = CurrentWindow,
+                Window = current,
                 Span = DateTime.Now.Subtract(LastTick)
             };
             CurrentTimeSlice.Add(info);

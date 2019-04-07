@@ -13,6 +13,16 @@ namespace windows_app.data_collection
 
         public static CurrentWindow Empty => new CurrentWindow();
 
+        public static CurrentWindow FromString(string name)
+        {
+            return new CurrentWindow()
+            {
+                ProgramName = name,
+                ProgramPath = name,
+                WindowTitle = name
+            };
+        }
+
         public static CurrentWindow GetActiveWindow()
         {
             try

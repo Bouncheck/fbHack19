@@ -75,13 +75,14 @@ namespace windows_app
 
         private string GetNoteJSON()
         {
-            string base64JPG = "data:image/jpeg;charset=utf-8;base64, " + ImageToBase64JPG();
+            string base64JPG = ImageToBase64JPG();
 
             NoteJSON noteJson = new NoteJSON()
             {
                 Image = base64JPG,
                 Note = NoteTextBox.Text,
-                Time = ScreenshotTime.ToString("o", CultureInfo.CurrentCulture)
+                Time = ScreenshotTime.ToString("o", CultureInfo.CurrentCulture),
+                User = CollectionConfiguration.Default.Username
             };
 
             MemoryStream memoryStream = new MemoryStream();
