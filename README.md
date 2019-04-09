@@ -9,4 +9,11 @@
 <p align="center">
 <img src="https://raw.githubusercontent.com/Bouncheck/fbHack19/master/screenshots/main_screen.png" width="45%">
 <img src="https://raw.githubusercontent.com/Bouncheck/fbHack19/master/screenshots/happy_moments.PNG" width="45%">
+<br><b>Web app</b>
+</p>           
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Bouncheck/fbHack19/master/screenshots/windows_tracker.png" width="45%">
+<img src="https://raw.githubusercontent.com/Bouncheck/fbHack19/master/screenshots/happy_note.png" width="45%">
+<br><b>Windows tracker</b>
 </p>            
